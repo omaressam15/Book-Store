@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nvig_frag"
+    app:startDestination="@id/home_Fragment">
+
+    <fragment
+        android:id="@+id/home_Fragment"
+        android:name="com.omaressam.bookstore.Home_Fragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_Fragment_to_featured_Fragment"
+            app:destination="@id/featured_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/book_Fragment"
+        android:name="com.omaressam.bookstore.Book_Fragment"
+        android:label="fragment_book"
+        tools:layout="@layout/fragment_book" />
+    <fragment
+        android:id="@+id/profile_Fragment"
+        android:name="com.omaressam.bookstore.Profile_Fragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/featured_Fragment"
+        android:name="com.omaressam.bookstore.Featured_Fragment"
+        android:label="fragment_featured"
+        tools:layout="@layout/fragment_featured" />
+</navigation>
