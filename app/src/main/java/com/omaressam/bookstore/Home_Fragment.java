@@ -14,12 +14,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.omaressam.bookstore.Featured.Featured;
-import com.omaressam.bookstore.Featured.Featured_Adabter;
-import com.omaressam.bookstore.Featured.Featured_item_Click;
+import com.omaressam.bookstore.Model.BookType;
+import com.omaressam.bookstore.Model.Books;
+import com.omaressam.bookstore.Model.Books_Adabter;
+import com.omaressam.bookstore.Model.Featured_item_Click;
 import com.omaressam.bookstore.network.api.ApiClient;
 import com.omaressam.bookstore.network.service.APIInterface;
-import com.omaressam.bookstore.network.service.APIInterface2;
 
 import java.util.List;
 
@@ -33,12 +33,14 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home_Fragment extends Fragment implements Book_Item_Click, Book_Item_Click2, Featured_item_Click {
+public class Home_Fragment extends Fragment implements Book_Item_Click, Featured_item_Click {
 
     private RecyclerView recyclerView10;
     private RecyclerView recyclerView2;
     private NavController navController;
     private APIInterface apiInterface;
+    private List<Books> books;
+
     private NavController navController2;
     public Home_Fragment() {
         // Required empty public constructor
@@ -73,6 +75,7 @@ public class Home_Fragment extends Fragment implements Book_Item_Click, Book_Ite
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -84,22 +87,23 @@ public class Home_Fragment extends Fragment implements Book_Item_Click, Book_Ite
 
 
     private void initUI2(View view) {
-        APIInterface2 apiInterface2 = ApiClient.getClient().create(APIInterface2.class);
+        APIInterface apiInterface = ApiClient.getClient().create(APIInterface.class);
 
-        apiInterface2.getBooks().enqueue(new Callback<List<Featured>>() {
+        apiInterface.getBooks().enqueue(new Callback<List<Books>>() {
             @Override
-            public void onResponse(Call<List<Featured>> call, Response<List<Featured>> response) {
-                List<Featured> featuredList = response.body();
+            public void onResponse(Call<List<Books>> call, Response<List<Books>> response) {
+                List<Books> booksList = response.body();
 
                 recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
 
-                Featured_Adabter featuredAdabter = new Featured_Adabter(featuredList, Home_Fragment.this);
-                recyclerView2.setAdapter(featuredAdabter);
+                Books_Adabter booksAdabter = new Books_Adabter(booksList, Home_Fragment.this, BookType.Home,null);
+                recyclerView2.setAdapter(booksAdabter);
             }
 
             @Override
-            public void onFailure(Call<List<Featured>> call, Throwable t) {
+            public void onFailure(Call<List<Books>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -115,10 +119,7 @@ public class Home_Fragment extends Fragment implements Book_Item_Click, Book_Ite
         navController = Navigation.findNavController(view);
     }
 
-    @Override
-    public void onItemClicked2(int position) {
-        navController.navigate(R.id.action_home_Fragment_to_featured_Fragment);
-    }
+
 
     @Override
     public void onItemClicked(int position) {

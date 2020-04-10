@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackSpace">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <TextView
+                android:id="@+id/profile_profile_header_textView"
+                android:textSize="24sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/profile"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/logOut_profile_header_textView"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/log_out"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage_profile_header_imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/profile_plaeholder"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/logOut_profile_header_textView"/>
+
+            <TextView
+                android:id="@+id/userName_profile_header_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="John Doe"
+                android:textSize="24sp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textColor="@color/colorBlack"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/profileImage_profile_header_imageView"/>
+
+            <TextView
+                android:id="@+id/email_profile_header_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="John.doe@gmail.com"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_light"
+                android:textColor="@color/colorTitle"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/userName_profile_header_textView"/>
+
+            <TextView
+                android:id="@+id/phone_profile_header_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="+20 123 445 6677"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_light"
+                android:textColor="@color/colorTitle"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/email_profile_header_textView"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</layout>

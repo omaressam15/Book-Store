@@ -3,6 +3,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,12 +13,18 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.omaressam.bookstore.Featured.Featured;
-import com.omaressam.bookstore.Featured.Featured_Adabter;
-import com.omaressam.bookstore.Featured.Featured_item_Click;
+
+import com.omaressam.bookstore.Model.BookType;
+import com.omaressam.bookstore.Model.Books;
+import com.omaressam.bookstore.Model.Books_Adabter;
+import com.omaressam.bookstore.Model.Featured_item_Click;
 import com.omaressam.bookstore.network.api.ApiClient;
-import com.omaressam.bookstore.network.service.APIInterface2;
+import com.omaressam.bookstore.network.service.APIInterface;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +37,7 @@ public class Featured_Fragment extends Fragment implements Featured_item_Click {
 
     private RecyclerView recyclerView7;
     private NavController navController7;
+    private List<Books> booksList;
 
     public Featured_Fragment() {
         // Required empty public constructor
@@ -38,31 +48,41 @@ public class Featured_Fragment extends Fragment implements Featured_item_Click {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_featured, container, false);
         recyclerView7 = view.findViewById(R.id.Recycleview10);
-        gooks(view);
+        initView(view);
+        loadBooks();
         return view;
     }
+    private void initView(View view) {
+        recyclerView7 = view.findViewById(R.id.Recycleview10);
 
-    private void gooks(View view ) {
+        ImageView imgBack = view.findViewById(R.id.back_imageView);
+        imgBack.setOnClickListener(v -> navController7.popBackStack());
+    }
 
-        APIInterface2 apiInterface2 = ApiClient.getClient().create(APIInterface2.class);
-
-        apiInterface2.getBooks().enqueue(new Callback<List<Featured>>() {
+    private void loadBooks() {
+        APIInterface apiService = ApiClient.getClient().create(APIInterface.class);
+        apiService.getBooks().enqueue(new Callback<List<Books>>() {
             @Override
-            public void onResponse(Call<List<Featured>> call, Response<List<Featured>> response) {
-                List<Featured> featuredList = response.body();
-
-                recyclerView7.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
-
-                Featured_Adabter featuredAdabter = new Featured_Adabter(featuredList, Featured_Fragment.this);
-                recyclerView7.setAdapter(featuredAdabter);
+            public void onResponse(@NotNull Call<List<Books>> call, @NotNull Response<List<Books>> response) {
+                if (response.isSuccessful()) {
+                    booksList = response.body();
+                    setupBooks();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Featured>> call, Throwable t) {
-
+            public void onFailure(@NotNull Call<List<Books>> call, @NotNull Throwable t) {
+                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    private void setupBooks() {
+
+        recyclerView7.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        Books_Adabter featuredAdabter = new Books_Adabter(booksList, Featured_Fragment.this, BookType.Featured,null);
+        recyclerView7.setAdapter(featuredAdabter);
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,6 +92,10 @@ public class Featured_Fragment extends Fragment implements Featured_item_Click {
 
     @Override
     public void onItemClicked3(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("BOOK",booksList.get(position));
+        navController7.navigate(R.id.action_featured_Fragment_to_bookDetailsFragment,bundle);
 
     }
+
 }

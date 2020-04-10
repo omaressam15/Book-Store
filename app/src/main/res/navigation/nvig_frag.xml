@@ -28,5 +28,13 @@
         android:id="@+id/featured_Fragment"
         android:name="com.omaressam.bookstore.Featured_Fragment"
         android:label="fragment_featured"
-        tools:layout="@layout/fragment_featured" />
+        tools:layout="@layout/fragment_featured" >
+        <action
+            android:id="@+id/action_featured_Fragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.omaressam.bookstore.BookDetailsFragment"
+        android:label="BookDetailsFragment" />
 </navigation>
